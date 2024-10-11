@@ -1,0 +1,47 @@
+import pandas as pd
+Dolar = 926,88
+
+dfA = pd.read_excel('Fondo A.xlsx')
+print(dfA)
+print('\n')
+
+dfB = pd.read_excel('Fondo B.xlsx')
+print(dfB)
+print('\n')
+
+dfC = pd.read_excel('Fondo C.xlsx')
+print(dfC)
+print('\n')
+
+dfD = pd.read_excel('Fondo D.xlsx')
+print(dfD)
+print('\n')
+
+dfE = pd.read_excel('Fondo E.xlsx')
+print(dfE)
+print('\n')
+
+dfA['Fondo'] = 'A'
+
+dfB['Fondo'] = 'B'
+
+dfC['Fondo'] = 'C'
+
+dfD['Fondo'] = 'D'
+
+dfE['Fondo'] = 'E'
+
+print(dfA.head())
+print(dfB.head())
+print(dfC.head())
+print(dfD.head())
+print(dfE.head())
+
+fondos_consolidados = pd.concat([dfA, dfB, dfC, dfD, dfE], ignore_index=True)
+fondos_consolidados['USD'] = (fondos_consolidados['Valor del Patrimonio'] / Dolar) * 1_000_000
+
+agrupados_por_afp = fondos_consolidados.groupby('A.F.P.')['USD'].sum().reset_index()
+print(agrupados_por_afp)
+
+suma_total_usd = fondos_consolidados['USD'].sum()
+print(f"Suma total de USD: {suma_total_usd}")
